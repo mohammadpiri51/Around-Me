@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:tools="http://schemas.android.com/tools"
+        >
+
+    <ImageView
+            android:id="@+id/image_place"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/DarkGray"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="15dp"/>
+    <TextView
+            android:id="@+id/txt_placeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="عنوان"
+            android:textSize="20sp"
+            android:layout_toLeftOf="@+id/image_place"
+            android:layout_alignTop="@+id/image_place"/>
+
+    <TextView
+            android:id="@+id/txt_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="آدرس اینجا نوشته می شود"
+            android:textSize="16sp"
+            android:layout_below="@+id/txt_placeName"
+            android:layout_toLeftOf="@id/image_place"/>
+
+    <TextView
+            android:id="@+id/txt_likesCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="5"
+            android:textSize="16sp"
+            android:layout_below="@+id/image_place"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="5dp"/>
+    <ImageView
+            android:id="@+id/image_likes"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/ic_like"
+            android:layout_below="@+id/image_place"
+            android:layout_toRightOf="@id/txt_likesCount"
+            android:layout_alignBottom="@id/txt_likesCount"/>
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/DarkGray"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/txt_likesCount"/>
+
+</RelativeLayout>
