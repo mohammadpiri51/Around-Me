@@ -6,10 +6,10 @@
         android:layout_height="match_parent"
         tools:context=".app.MainActivity">
 
-
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_place"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
+
 </FrameLayout>

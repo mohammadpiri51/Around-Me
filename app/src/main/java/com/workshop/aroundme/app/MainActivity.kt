@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,9 +13,8 @@ import com.workshop.aroundme.data.model.PlaceEntity
 import com.workshop.aroundme.remote.NetworkManager
 import com.workshop.aroundme.remote.datasource.PlaceDataSource
 import com.workshop.aroundme.remote.service.PlaceService
-import java.util.*
 
-class MainActivity : AppCompatActivity(),OnPlaceListItemClickListener {
+class MainActivity : AppCompatActivity(), OnPlaceListItemClickListener {
     override fun onPlaceClick(placeEntity: PlaceEntity) {
 //        Toast.makeText(this,"${placeEntity.name} is selected",Toast.LENGTH_SHORT).show()
         val addressUri = Uri.parse("geo:0,0?q=${placeEntity.location}")
@@ -38,8 +36,8 @@ class MainActivity : AppCompatActivity(),OnPlaceListItemClickListener {
     }
 
     private fun onFeaturedPlacesReady(list: List<PlaceEntity>?) = runOnUiThread {
-       var recyclerView: RecyclerView=findViewById(R.id.recyclerView_place)
-        recyclerView.layoutManager=LinearLayoutManager(this)
-        recyclerView.adapter=PlaceAdapter(list?: emptyList(),this)
+        var recyclerView: RecyclerView = findViewById(R.id.recyclerView_place)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = PlaceAdapter(list ?: emptyList(), this)
     }
 }
