@@ -14,7 +14,7 @@ class PlaceAdapter( private val items :List<PlaceEntity>,
     }
 
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
-       holder.bind(items[position],position,onPlaceListItemClickListener)
+       holder.bind(items[position],onPlaceListItemClickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {

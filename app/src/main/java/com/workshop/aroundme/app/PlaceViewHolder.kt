@@ -19,23 +19,19 @@ class PlaceViewHolder(itemView : View): RecyclerView.ViewHolder(itemView) {
 
     fun bind(
         place:PlaceEntity,
-        position:Int,
         onPlaceListItemClickListener: OnPlaceListItemClickListener){
 
         placeNameTextView.text = place.name
         addressTextView.text = place.address?:""
+
         if (place.likesCount!=null && place.likesCount>0){
+            likesCountTextView.visibility = View.VISIBLE
+            likesCountImageView.visibility = View.VISIBLE
             likesCountTextView.text = place.likesCount.toString()
         }else{
             likesCountTextView.visibility = View.GONE
             likesCountImageView.visibility = View.GONE
         }
-
-
-//        if (position.rem(other = 2) == 0) {
-//            placeNameTextView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
-//            placeNameTextView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorPrimary))
-//        }
 
         itemView.setOnClickListener{
             onPlaceListItemClickListener.onPlaceClick(place)
