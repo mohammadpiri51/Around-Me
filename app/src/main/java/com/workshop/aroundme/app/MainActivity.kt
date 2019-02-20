@@ -4,6 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.EditText
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +23,7 @@ class MainActivity : AppCompatActivity(), OnPlaceListItemClickListener {
         val addressUri = Uri.parse("geo:0,0?q=${placeEntity.location}")
         val intent = Intent(Intent.ACTION_VIEW, addressUri)
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
+            startActivity(intent)
         } else {
             Log.d("AroundMe", "Can't show this location!")
         }
@@ -37,7 +40,24 @@ class MainActivity : AppCompatActivity(), OnPlaceListItemClickListener {
 
     private fun onFeaturedPlacesReady(list: List<PlaceEntity>?) = runOnUiThread {
         var recyclerView: RecyclerView = findViewById(R.id.recyclerView_place)
+        recyclerView.visibility=View.VISIBLE
+        val progressBar = findViewById<ProgressBar>(R.id.loadingBar)
+        progressBar?.visibility = View.GONE
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = PlaceAdapter(list ?: emptyList(), this)
+    }
+
+    fun searchPlaces(view:View){
+        val searchTextView=findViewById<EditText>(R.id.txt_search)
+        val searchQuery:String=searchTextView.text.toString()
+        if(!searchQuery.isNullOrEmpty()){
+            var recyclerView: RecyclerView = findViewById(R.id.recyclerView_place)
+            recyclerView?.visibility=View.GONE
+            val progressBar = findViewById<ProgressBar>(R.id.loadingBar)
+            progressBar?.visibility = View.VISIBLE
+            val placeRepository = PlaceRepository(PlaceDataSource(PlaceService(NetworkManager())))
+            placeRepository.getFeaturedPlaces(::onFeaturedPlacesReady,searchQuery)
+        }
+
     }
 }
