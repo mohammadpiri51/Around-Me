@@ -40,23 +40,23 @@ class MainActivity : AppCompatActivity(), OnPlaceListItemClickListener {
 
     private fun onFeaturedPlacesReady(list: List<PlaceEntity>?) = runOnUiThread {
         var recyclerView: RecyclerView = findViewById(R.id.recyclerView_place)
-        recyclerView.visibility=View.VISIBLE
+        recyclerView.visibility = View.VISIBLE
         val progressBar = findViewById<ProgressBar>(R.id.loadingBar)
         progressBar?.visibility = View.GONE
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = PlaceAdapter(list ?: emptyList(), this)
     }
 
-    fun searchPlaces(view:View){
-        val searchTextView=findViewById<EditText>(R.id.txt_search)
-        val searchQuery:String=searchTextView.text.toString()
-        if(!searchQuery.isNullOrEmpty()){
+    fun searchPlaces(view: View) {
+        val searchTextView = findViewById<EditText>(R.id.txt_search)
+        val searchQuery: String = searchTextView.text.toString()
+        if (!searchQuery.isNullOrEmpty()) {
             var recyclerView: RecyclerView = findViewById(R.id.recyclerView_place)
-            recyclerView?.visibility=View.GONE
+            recyclerView?.visibility = View.GONE
             val progressBar = findViewById<ProgressBar>(R.id.loadingBar)
             progressBar?.visibility = View.VISIBLE
             val placeRepository = PlaceRepository(PlaceDataSource(PlaceService(NetworkManager())))
-            placeRepository.getFeaturedPlaces(::onFeaturedPlacesReady,searchQuery)
+            placeRepository.getFeaturedPlaces(::onFeaturedPlacesReady, searchQuery)
         }
 
     }

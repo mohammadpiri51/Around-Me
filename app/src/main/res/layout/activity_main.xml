@@ -6,17 +6,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".app.MainActivity">
+
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@color/LightGray">
+
         <Button
                 android:id="@+id/btn_search"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/ic_search"
                 android:onClick="searchPlaces"/>
+
         <EditText
                 android:id="@+id/txt_search"
                 android:layout_width="match_parent"
@@ -26,14 +29,14 @@
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_place"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-        <requestFocus />
+            android:layout_height="wrap_content">
+        <requestFocus/>
     </androidx.recyclerview.widget.RecyclerView>
+
     <ProgressBar
             android:id="@+id/loadingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"/>
 
 </LinearLayout>
