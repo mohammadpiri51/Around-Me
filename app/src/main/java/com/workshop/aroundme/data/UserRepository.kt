@@ -1,5 +1,6 @@
 package com.workshop.aroundme.data
 
+import com.workshop.aroundme.data.Mapper.toUserLoginItem
 import com.workshop.aroundme.data.Mapper.toUserRegisterItem
 import com.workshop.aroundme.data.model.UserEntity
 import com.workshop.aroundme.local.datasource.UserLocalDataSource
@@ -13,6 +14,14 @@ class UserRepository(
     fun registerUser(userEntity: UserEntity, success: (UserResponseModel?) -> Unit) {
         Thread {
             val result = userRemoteDataSource.registerUser(userEntity.toUserRegisterItem())
+
+            success(result)
+        }.start()
+    }
+
+    fun loginUser(userEntity: UserEntity, success: (UserResponseModel?) -> Unit) {
+        Thread {
+            val result = userRemoteDataSource.loginUser(userEntity.toUserLoginItem())
 
             success(result)
         }.start()
