@@ -31,6 +31,10 @@ class UserRepository(
         userLocalDataSource.addLogin(user)
     }
 
+    fun logOut() {
+        userLocalDataSource.logout()
+    }
+
 
     fun isLoggedIn() = userLocalDataSource.getUser() != null
 }

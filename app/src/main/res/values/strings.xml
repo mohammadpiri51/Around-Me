@@ -8,4 +8,5 @@
     <string name="ok">باشه</string>
     <string name="one_of_fields_is_invalid">یکی از فیلدها اشتباه وارد شده است</string>
     <string name="invalid_username_or_password">ایمیل یا رمز عبور اشتباه وارد شده است</string>
+    <string name="logOut">خروج</string>
 </resources>
