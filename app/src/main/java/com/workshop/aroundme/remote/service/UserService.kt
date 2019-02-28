@@ -1,33 +1,26 @@
 package com.workshop.aroundme.remote.service
 
 import com.google.gson.Gson
+import com.workshop.aroundme.remote.NetworkManager
 import com.workshop.aroundme.remote.model.UserLoginItem
 import com.workshop.aroundme.remote.model.UserRegisterItem
 import com.workshop.aroundme.remote.model.response.UserResponseModel
 import io.github.rybalkinsd.kohttp.dsl.httpPost
+import io.github.rybalkinsd.kohttp.util.Json
+import io.github.rybalkinsd.kohttp.util.json
 import okhttp3.Response
 
 
-class UserService() {
+class UserService(private val networkManager: NetworkManager) {
 
     fun registerUser(userRegisterItem: UserRegisterItem): UserResponseModel {
-        val response: Response = httpPost {
-            scheme = URL_SCHEME
-            host = URL_HOST
-            path = URL_REGISTERPATH
-
-            // param { ... }
-            // header { ... }
-
-            body {
-                json {
-                    "fullName" to userRegisterItem.fullName
-                    "email" to userRegisterItem.email
-                    "password" to userRegisterItem.passWord
-                }
-            }
-
+        val jsonModel = json {
+            "fullName" to userRegisterItem.fullName
+            "email" to userRegisterItem.email
+            "password" to userRegisterItem.passWord
         }
+        val response: Response = networkManager.postByJson(URL_SCHEME, URL_HOST, URL_REGISTERPATH,jsonModel)
+
         return UserResponseModel(
             code = response.code(),
             message = response.message(),
@@ -40,22 +33,13 @@ class UserService() {
     }
 
     fun loginUser(userLoginItem: UserLoginItem): UserResponseModel {
-        val response: Response = httpPost {
-            scheme = URL_SCHEME
-            host = URL_HOST
-            path = URL_LOGINPATH
 
-            // param { ... }
-            // header { ... }
-
-            body {
-                json {
-                    "email" to userLoginItem.email
-                    "password" to userLoginItem.passWord
-                }
-            }
-
+        val jsonModel = json {
+            "email" to userLoginItem.email
+            "password" to userLoginItem.passWord
         }
+        val response: Response = networkManager.postByJson(URL_SCHEME, URL_HOST, URL_LOGINPATH,jsonModel)
+
         return UserResponseModel(
             code = response.code(),
             message = response.message(),

@@ -9,4 +9,8 @@
     <string name="one_of_fields_is_invalid">یکی از فیلدها اشتباه وارد شده است</string>
     <string name="invalid_username_or_password">ایمیل یا رمز عبور اشتباه وارد شده است</string>
     <string name="logOut">خروج</string>
+    <string name="fill_all_fields">تمامی فیلد ها را پر کنید</string>
+    <string name="email_is_wrong">ایمیل اشتباه وارد شده است</string>
+    <string name="test">test</string>
+    <string name="internet_connection_error">اینترنت قطع می باشد</string>
 </resources>

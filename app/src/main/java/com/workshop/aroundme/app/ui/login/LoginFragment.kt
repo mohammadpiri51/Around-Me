@@ -1,8 +1,6 @@
 package com.workshop.aroundme.app.ui.login
 
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.workshop.aroundme.R
 import com.workshop.aroundme.app.Injector
+import com.workshop.aroundme.app.ui.Utilty
 import com.workshop.aroundme.app.ui.home.PlaceFragment
 import com.workshop.aroundme.data.Mapper.toUserEntity
 import com.workshop.aroundme.data.model.UserEntity
@@ -25,8 +24,11 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_login, container, false)
+        return inflater.inflate(R.layout.fragment_login, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val registerTextView = view.findViewById(R.id.lbl_register) as TextView
         registerTextView.setOnClickListener {
             fragmentManager?.beginTransaction()
@@ -34,20 +36,29 @@ class LoginFragment : Fragment() {
                 ?.commit()
         }
 
-        val emailEditText = view.findViewById(R.id.txt_email) as EditText
-        val passwordEditText = view.findViewById(R.id.txt_password) as EditText
-        val loginBtn = view.findViewById(R.id.btn_login) as Button
-        loginBtn.setOnClickListener {
-            Injector.provideUserRepository(requireContext()).loginUser(
-                UserEntity(
-                    fullName = "",
-                    email = emailEditText.text.toString(),
-                    passWord = passwordEditText.text.toString()
-                ), ::onUserLogin
-            )
+        if (Utilty.isInternetAvailable(requireContext())) {
+            val emailEditText = view.findViewById(R.id.txt_email) as EditText
+            val passwordEditText = view.findViewById(R.id.txt_password) as EditText
+            val loginBtn = view.findViewById(R.id.btn_login) as Button
+            loginBtn.setOnClickListener {
+                if (emailEditText.text.toString().isNullOrEmpty() ||
+                    passwordEditText.text.toString().isNullOrEmpty()
+                )
+                    Utilty.showAlert(requireContext(), getString(R.string.error), getString(R.string.fill_all_fields))
+                else if (!Utilty.isEmailValid(emailEditText.text.toString()))
+                    Utilty.showAlert(requireContext(), getString(R.string.error), getString(R.string.email_is_wrong))
+                else
+                    Injector.provideUserRepository(requireContext()).loginUser(
+                        UserEntity(
+                            fullName = "",
+                            email = emailEditText.text.toString(),
+                            passWord = passwordEditText.text.toString()
+                        ), ::onUserLogin
+                    )
+            }
+        } else {
+            Utilty.showAlert(requireContext(), getString(R.string.error), getString(R.string.internet_connection_error))
         }
-
-        return view
     }
 
     private fun onUserLogin(userResponseModel: UserResponseModel?) {
@@ -58,20 +69,13 @@ class LoginFragment : Fragment() {
                     ?.replace(R.id.content_frame, PlaceFragment())
                     ?.commit()
             } else {
-                showAlert(getString(R.string.error), getString(R.string.invalid_username_or_password))
+                Utilty.showAlert(
+                    requireContext(),
+                    getString(R.string.error),
+                    getString(R.string.invalid_username_or_password)
+                )
             }
         }
-    }
-
-    private fun showAlert(title: String, text: String) {
-        AlertDialog.Builder(view?.context)
-            .setTitle(title)
-            .setMessage(text)
-            .setPositiveButton(getString(R.string.ok)) { dialogInterface: DialogInterface, i: Int ->
-                dialogInterface.dismiss()
-            }
-            .create()
-            .show()
     }
 
 }

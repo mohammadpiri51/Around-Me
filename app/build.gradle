@@ -39,5 +39,5 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    compile 'io.github.rybalkinsd:kohttp:0.7.1'
+    implementation 'io.github.rybalkinsd:kohttp:0.7.1'
 }

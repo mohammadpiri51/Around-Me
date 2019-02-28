@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
@@ -21,6 +22,7 @@ import com.workshop.aroundme.remote.datasource.PlaceDataSource
 import com.workshop.aroundme.remote.service.PlaceService
 
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class PlaceFragment : Fragment(), OnPlaceListItemClickListener {
 
     override fun onCreateView(
@@ -32,6 +34,18 @@ class PlaceFragment : Fragment(), OnPlaceListItemClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        view.findViewById<Button>(R.id.btn_search).setOnClickListener {
+            val searchTextView = view.findViewById<EditText>(R.id.txt_search)
+            val searchQuery: String = searchTextView.text.toString()
+            if (!searchQuery.isNullOrEmpty()) {
+                var recyclerView: RecyclerView = view.findViewById(R.id.recyclerView_place)
+                recyclerView.visibility = View.GONE
+                val progressBar = view.findViewById<ProgressBar>(R.id.loadingBar)
+                progressBar?.visibility = View.VISIBLE
+                val placeRepository = PlaceRepository(PlaceDataSource(PlaceService(NetworkManager())))
+                placeRepository.getFeaturedPlaces(::onFeaturedPlacesReady, searchQuery)
+            }
+        }
         val placeRepository = PlaceRepository(PlaceDataSource(PlaceService(NetworkManager())))
         placeRepository.getFeaturedPlaces(::onFeaturedPlacesReady)
     }
@@ -47,24 +61,10 @@ class PlaceFragment : Fragment(), OnPlaceListItemClickListener {
         }
     }
 
-    fun searchPlaces(view: View) {
-        val searchTextView = view.findViewById<EditText>(R.id.txt_search)
-        val searchQuery: String = searchTextView.text.toString()
-        if (!searchQuery.isNullOrEmpty()) {
-            var recyclerView: RecyclerView = view.findViewById(R.id.recyclerView_place)
-            recyclerView?.visibility = View.GONE
-            val progressBar = view.findViewById<ProgressBar>(R.id.loadingBar)
-            progressBar?.visibility = View.VISIBLE
-            val placeRepository = PlaceRepository(PlaceDataSource(PlaceService(NetworkManager())))
-            placeRepository.getFeaturedPlaces(::onFeaturedPlacesReady, searchQuery)
-        }
-
-    }
-
     override fun onPlaceClick(placeEntity: PlaceEntity) {
         val addressUri = Uri.parse("geo:0,0?q=${placeEntity.location}")
         val intent = Intent(Intent.ACTION_VIEW, addressUri)
-        if (intent.resolveActivity(activity?.getPackageManager()) != null) {
+        if (intent.resolveActivity(this.activity?.packageManager) != null) {
             startActivity(intent)
         } else {
             Log.d("AroundMe", "Can't show this location!")

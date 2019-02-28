@@ -18,7 +18,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/ic_search"
-                android:onClick="searchPlaces"/>
+                />
 
         <EditText
                 android:id="@+id/txt_search"
@@ -30,6 +30,7 @@
             android:id="@+id/recyclerView_place"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
         <requestFocus/>
     </androidx.recyclerview.widget.RecyclerView>
 

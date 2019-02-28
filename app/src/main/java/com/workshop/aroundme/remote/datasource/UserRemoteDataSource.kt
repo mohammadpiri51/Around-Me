@@ -12,7 +12,6 @@ class UserRemoteDataSource(private val userService: UserService) {
     }
 
     fun loginUser(userLoginItem: UserLoginItem): UserResponseModel? {
-        val test = userService.loginUser(userLoginItem)
         return userService.loginUser(userLoginItem)
     }
 }
