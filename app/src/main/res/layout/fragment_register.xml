@@ -43,20 +43,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
-                    android:hint="Email"/>
+                    android:hint="@string/full_name"/>
 
             <EditText
                     android:id="@+id/txt_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"/>
+                    android:hint="@string/email"/>
 
             <EditText
                     android:id="@+id/txt_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="Password"/>
+                    android:hint="@string/password"/>
 
             <Button
                     android:id="@+id/btn_register"

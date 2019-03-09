@@ -3,14 +3,21 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="error">خطا</string>
-    <string name="there_is_already_a_user_with_this_info">کاربری با این اطلاعات وجود دارد</string>
-    <string name="ok">باشه</string>
-    <string name="one_of_fields_is_invalid">یکی از فیلدها اشتباه وارد شده است</string>
-    <string name="invalid_username_or_password">ایمیل یا رمز عبور اشتباه وارد شده است</string>
-    <string name="logOut">خروج</string>
-    <string name="fill_all_fields">تمامی فیلد ها را پر کنید</string>
-    <string name="email_is_wrong">ایمیل اشتباه وارد شده است</string>
-    <string name="test">test</string>
-    <string name="internet_connection_error">اینترنت قطع می باشد</string>
+    <string name="error">error</string>
+    <string name="there_is_already_a_user_with_this_info">there is already a user with this information</string>
+    <string name="ok">OK</string>
+    <string name="one_of_fields_is_invalid">one of the fields is invalid</string>
+    <string name="invalid_username_or_password">email or password is invalid</string>
+    <string name="logOut">logout</string>
+    <string name="fill_all_fields">fill all fields</string>
+    <string name="email_is_wrong">email is wrong</string>
+    <string name="internet_connection_error">Internet connection error</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="remember_me">Remember me</string>
+    <string name="welcome">Welcome</string>
+    <string name="categories">Categories</string>
+    <string name="search">جستجو ...</string>
 </resources>

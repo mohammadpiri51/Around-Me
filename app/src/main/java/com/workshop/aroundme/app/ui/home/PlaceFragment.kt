@@ -5,9 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -15,6 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.workshop.aroundme.R
+import com.workshop.aroundme.app.Injector
+import com.workshop.aroundme.app.ui.category.CategoryFragment
+import com.workshop.aroundme.app.ui.login.LoginFragment
 import com.workshop.aroundme.data.PlaceRepository
 import com.workshop.aroundme.data.model.PlaceEntity
 import com.workshop.aroundme.remote.NetworkManager
@@ -25,6 +26,11 @@ import com.workshop.aroundme.remote.service.PlaceService
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class PlaceFragment : Fragment(), OnPlaceListItemClickListener {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,7 +40,7 @@ class PlaceFragment : Fragment(), OnPlaceListItemClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        view.findViewById<Button>(R.id.btn_search).setOnClickListener {
+        view.findViewById<View>(R.id.btn_search).setOnClickListener {
             val searchTextView = view.findViewById<EditText>(R.id.txt_search)
             val searchQuery: String = searchTextView.text.toString()
             if (!searchQuery.isNullOrEmpty()) {
@@ -70,5 +76,30 @@ class PlaceFragment : Fragment(), OnPlaceListItemClickListener {
             Log.d("AroundMe", "Can't show this location!")
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.fragment_place_toolbar, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menuItem_logOut -> {
+                Injector.provideUserRepository(requireContext()).logOut()
+                fragmentManager?.beginTransaction()
+                    ?.replace(R.id.content_frame, LoginFragment())
+                    ?.commit()
+            }
+
+            R.id.menuItem_categories -> {
+                fragmentManager?.beginTransaction()
+                    ?.replace(R.id.content_frame, CategoryFragment())
+                    ?.addToBackStack(null)
+                    ?.commit()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
 }

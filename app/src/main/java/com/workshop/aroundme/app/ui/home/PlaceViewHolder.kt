@@ -18,7 +18,6 @@ class PlaceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         place: PlaceEntity,
         onPlaceListItemClickListener: OnPlaceListItemClickListener
     ) {
-
         placeNameTextView.text = place.name
         addressTextView.text = place.address ?: ""
 

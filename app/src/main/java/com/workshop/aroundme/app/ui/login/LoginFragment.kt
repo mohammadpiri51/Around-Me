@@ -13,7 +13,7 @@ import com.workshop.aroundme.R
 import com.workshop.aroundme.app.Injector
 import com.workshop.aroundme.app.ui.Utilty
 import com.workshop.aroundme.app.ui.home.PlaceFragment
-import com.workshop.aroundme.data.Mapper.toUserEntity
+import com.workshop.aroundme.data.mapper.toUserEntity
 import com.workshop.aroundme.data.model.UserEntity
 import com.workshop.aroundme.remote.model.response.UserResponseModel
 

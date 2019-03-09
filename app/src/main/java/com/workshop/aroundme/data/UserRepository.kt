@@ -1,7 +1,7 @@
 package com.workshop.aroundme.data
 
-import com.workshop.aroundme.data.Mapper.toUserLoginItem
-import com.workshop.aroundme.data.Mapper.toUserRegisterItem
+import com.workshop.aroundme.data.mapper.toUserLoginItem
+import com.workshop.aroundme.data.mapper.toUserRegisterItem
 import com.workshop.aroundme.data.model.UserEntity
 import com.workshop.aroundme.local.datasource.UserLocalDataSource
 import com.workshop.aroundme.remote.datasource.UserRemoteDataSource

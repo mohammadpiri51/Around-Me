@@ -2,10 +2,13 @@ package com.workshop.aroundme.app
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.workshop.aroundme.data.CategoryRepository
 import com.workshop.aroundme.data.UserRepository
 import com.workshop.aroundme.local.datasource.UserLocalDataSource
 import com.workshop.aroundme.remote.NetworkManager
+import com.workshop.aroundme.remote.datasource.CategoryRemoteDataSource
 import com.workshop.aroundme.remote.datasource.UserRemoteDataSource
+import com.workshop.aroundme.remote.service.CategoryService
 import com.workshop.aroundme.remote.service.UserService
 
 object Injector {
@@ -21,5 +24,15 @@ object Injector {
 
     private fun provideDefaultSharedPref(context: Context): SharedPreferences {
         return context.getSharedPreferences("user.data", Context.MODE_PRIVATE)
+    }
+
+    fun provideCategoryRepository(): CategoryRepository {
+        return CategoryRepository(
+            CategoryRemoteDataSource(
+                CategoryService(
+                    NetworkManager()
+                )
+            )
+        )
     }
 }

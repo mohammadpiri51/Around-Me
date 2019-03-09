@@ -8,11 +8,11 @@ class UserLocalDataSource(private val sharedPreferences: SharedPreferences) {
 
     fun addLogin(user: UserEntity) {
         val userData = Gson().toJson(user, UserEntity::class.java)
-        sharedPreferences.edit().putString(KEY_USER, userData).commit()
+        sharedPreferences.edit().putString(KEY_USER, userData).apply()
     }
 
     fun logout() {
-        sharedPreferences.edit().remove(KEY_USER).commit()
+        sharedPreferences.edit().remove(KEY_USER).apply()
     }
 
     fun getUser(): UserEntity? {
