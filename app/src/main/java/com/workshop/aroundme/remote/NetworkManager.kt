@@ -15,19 +15,19 @@ class NetworkManager {
             }
     }
 
-    fun postByJson(url_scheme:String,usr_host:String,url_path:String,jsonModel:String):Response{
+    fun postByJson(url_scheme: String, usr_host: String, url_path: String, jsonModel: String): Response {
         return httpPost {
-                    scheme = url_scheme
-                    host = usr_host
-                    path = url_path
+            scheme = url_scheme
+            host = usr_host
+            path = url_path
 
-                    // param { ... }
-                    // header { ... }
+            // param { ... }
+            // header { ... }
 
             body("application/json") {
                 string(jsonModel)
             }
 
-                }
+        }
     }
 }

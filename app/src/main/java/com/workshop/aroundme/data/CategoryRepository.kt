@@ -1,6 +1,7 @@
 package com.workshop.aroundme.data
 
 import com.workshop.aroundme.data.mapper.toParentCategoryEntity
+import com.workshop.aroundme.data.model.category.CategoryEntity
 import com.workshop.aroundme.data.model.category.ParentCategoryEntity
 import com.workshop.aroundme.remote.datasource.CategoryRemoteDataSource
 
@@ -8,14 +9,10 @@ class CategoryRepository(private val categoryDataSource: CategoryRemoteDataSourc
 
     fun getCategories(success: (List<ParentCategoryEntity>?) -> Unit, searchQuery: String = "") {
         Thread {
-            val result = categoryDataSource.getCategories()?.map {
-                it.toParentCategoryEntity()
-            }
-                ?.filter { parentCategory ->
-                    filterParentCategories(parentCategory, searchQuery)
-                }?.map(fun(parentCategory: ParentCategoryEntity): ParentCategoryEntity {
-                    return filterCategories(parentCategory, searchQuery)
-                })
+            val result = categoryDataSource.getCategories()
+                ?.map { it.toParentCategoryEntity() }
+                ?.filter { parentCategory -> filterParentCategories(parentCategory, searchQuery) }
+                ?.map { parentCategory -> mapToParentCategoryEntity(parentCategory, searchQuery) }
 
             success(result)
         }.start()
@@ -23,7 +20,7 @@ class CategoryRepository(private val categoryDataSource: CategoryRemoteDataSourc
     }
 
     private fun filterParentCategories(parentCategory: ParentCategoryEntity, searchQuery: String): Boolean {
-        return searchQuery?.isNullOrEmpty() ||
+        return searchQuery.isEmpty() ||
                 parentCategory.categories?.any { categoryEntity ->
                     categoryEntity.name?.contains(
                         searchQuery
@@ -31,16 +28,17 @@ class CategoryRepository(private val categoryDataSource: CategoryRemoteDataSourc
                 } ?: false
     }
 
-    private fun filterCategories(parentCategory: ParentCategoryEntity, searchQuery: String): ParentCategoryEntity {
+    private fun mapToParentCategoryEntity(parentCategory: ParentCategoryEntity, searchQuery: String): ParentCategoryEntity {
         return ParentCategoryEntity(
             id = null,
             name = parentCategory.name,
             categories = parentCategory.categories?.filter { categoryEntity ->
-                categoryEntity.name?.contains(
-                    searchQuery
-                ) ?: false
+                filterCategory(categoryEntity, searchQuery)
             }
         )
     }
+
+    private fun filterCategory(categoryEntity: CategoryEntity, searchQuery: String): Boolean =
+        categoryEntity.name?.contains(searchQuery) ?: false
 
 }
